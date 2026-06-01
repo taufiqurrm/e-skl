@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKL- MTs. BU WARU</title>
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+<!-- 
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b1f3a'/><text y='44' x='32' text-anchor='middle' font-size='36' font-family='serif' font-weight='bold' fill='%23c8993a'>🎓</text></svg>"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --navy: #1a4731;
+  --navy2: #235c3f;
+  --gold: #c8993a;
+  --gold2: #e8b84b;
+  --gold-light: #f5e0a0;
+  --cream: #f4f9f6;
+  --white: #ffffff;
+  --green: #14532d;
+  --green2: #16a34a;
+  --red: #7f1d1d;
+  --red2: #dc2626;
+  --gray: #94a3b8;
+  --text: #1a2e24;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── BG PATTERN ── */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(200,153,58,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(11,31,58,.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: auto;
+}
+
+/* ── HEADER ── */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #0f2d1c 0%, #1a4731 50%, #235c3f 100%);
+  padding: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.04);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 36px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.hero-logo {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: contain;
+  border: 2.5px solid rgba(200,153,58,.5);
+  background: rgba(255,255,255,.08);
+  padding: 6px;
+  display: block;
+}
+.hero-logo-placeholder {
+  width: 84px; height: 84px; border-radius: 50%;
+  border: 2.5px solid rgba(200,153,58,.4);
+  background: rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px; font-weight: 700;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(200,153,58,.15);
+  border: 1px solid rgba(200,153,58,.4);
+  color: var(--gold2);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 900;
+  color: var(--white);
+  text-align: center;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.hero-title span { color: var(--gold2); }
+
+.hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  text-align: center;
+  letter-spacing: .02em;
+  display: flex; gap: 8px; align-items: center;
+}
+.hero-sub::before, .hero-sub::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,153,58,.3));
+}
+.hero-sub::after { transform: scaleX(-1); }
+
+/* ── MAIN CONTAINER ── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+/* ── SEARCH CARD ── */
+.search-card {
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(11,31,58,.10), 0 2px 8px rgba(11,31,58,.06);
+  padding: 36px 32px;
+  border: 1px solid rgba(200,153,58,.12);
+}
+
+.card-eyebrow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.card-title {
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.card-sub {
+  font-size: 13.5px;
+  color: var(--gray);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* Input */
+.input-group {
+  display: flex;
+  gap: 10px;
+  background: #f1f5f9;
+  border-radius: 14px;
+  padding: 6px 6px 6px 18px;
+  border: 1.5px solid #e2e8f0;
+  transition: border-color .2s, box-shadow .2s;
+}
+.input-group:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(200,153,58,.1);
+  background: var(--white);
+}
+.input-group input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: .04em;
+}
+.input-group input::placeholder { color: #94a3b8; font-weight: 400; }
+.input-group input:disabled { opacity: .5; }
+
+.btn-cari {
+  background: linear-gradient(135deg, var(--navy), var(--navy2));
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-cari:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
+.btn-cari:disabled { opacity: .4; cursor: default; transform: none; }
+.btn-cari svg { flex-shrink: 0; }
+
+/* Spinner */
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Info / error boxes */
+.msg-box { margin-top: 20px; }
+.info-box {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #93c5fd;
+  border-radius: 14px;
+  padding: 18px 20px;
+  font-size: 13px;
+  color: #1e40af;
+  line-height: 1.6;
+  display: flex; gap: 12px;
+}
+.info-box-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.error-box {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 14px;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--red2);
+  display: flex; gap: 10px; align-items: center;
+}
+
+/* ── HASIL ── */
+#hasil { display: none; margin-top: 28px; }
+
+
+/* Status banner */
+.status-banner {
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.status-banner.lulus {
+  background: linear-gradient(135deg, #052e16, #14532d, #166534);
+}
+.status-banner.bersyarat {
+  background: linear-gradient(135deg, #431407, #7c2d12, #9a3412);
+}
+.status-banner.tidak {
+  background: linear-gradient(135deg, #3f0a0a, #7f1d1d, #991b1b);
+}
+.status-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.02);
+}
+.status-banner::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 2px;
+  border-radius: 2px;
+}
+.status-banner.lulus::after { background: linear-gradient(90deg, transparent, #4ade80, transparent); }
+.status-banner.bersyarat::after { background: linear-gradient(90deg, transparent, #fb923c, transparent); }
+.status-banner.tidak::after { background: linear-gradient(90deg, transparent, #f87171, transparent); }
+
+.status-icon-wrap {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 36px;
+  position: relative;
+  overflow: hidden;
+}
+.bersyarat .status-icon-wrap { background: rgba(251,146,60,.15); border: 3px solid rgba(251,146,60,.5); box-shadow: 0 0 0 4px rgba(251,146,60,.1); }
+.lulus .status-icon-wrap { background: rgba(74,222,128,.15); border: 3px solid rgba(74,222,128,.5); box-shadow: 0 0 0 4px rgba(74,222,128,.1); }
+.tidak .status-icon-wrap { background: rgba(248,113,113,.15); border: 3px solid rgba(248,113,113,.5); box-shadow: 0 0 0 4px rgba(248,113,113,.1); }
+
+#foto-siswa {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: none;
+}
+#status-icon { line-height: 1; }
+
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.lulus .status-label { color: rgba(74,222,128,.7); }
+.bersyarat .status-label { color: rgba(251,146,60,.7); }
+.tidak .status-label { color: rgba(248,113,113,.7); }
+
+.status-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.lulus .status-text { color: #4ade80; }
+.bersyarat .status-text { color: #fb923c; }
+.tidak .status-text { color: #f87171; }
+
+.status-tahun {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  font-weight: 400;
+}
+
+/* Siswa info card */
+.siswa-card {
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.siswa-card-header {
+  background: linear-gradient(135deg, var(--navy), var(--navy2));
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.siswa-card-header-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+.siswa-card-body {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.siswa-field label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: block;
+  margin-bottom: 4px;
+}
+.siswa-field .val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.siswa-field.full { grid-column: 1 / -1; }
+
+/* Nilai */
+.nilai-card {
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.nilai-card-header {
+  background: linear-gradient(135deg, var(--navy), var(--navy2));
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nilai-card-header-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+.nilai-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.nilai-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background .15s;
+}
+.nilai-item:nth-child(odd) { border-right: 1px solid #f1f5f9; }
+.nilai-item:nth-last-child(-n+2) { border-bottom: none; }
+.nilai-item:hover { background: #f8fafc; }
+.nilai-mapel { font-size: 12.5px; color: #475569; }
+.nilai-angka {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  min-width: 36px;
+  text-align: right;
+}
+.nilai-angka.tinggi { color: var(--green2); }
+.nilai-angka.rendah { color: var(--red2); }
+
+/* Tombol aksi */
+.aksi-group { display: flex; flex-direction: column; gap: 10px; }
+.btn-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--navy), var(--navy2));
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(11,31,58,.25);
+}
+.btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,31,58,.3); }
+.btn-download-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.12);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-reset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  background: none;
+  color: var(--gray);
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.btn-reset:hover { color: var(--navy); border-color: var(--navy); background: #f8fafc; }
+
+/* Divider emas */
+.gold-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 28px 0;
+}
+.gold-divider::before, .gold-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,153,58,.4));
+}
+.gold-divider::after { transform: scaleX(-1); }
+.gold-divider span {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 24px 16px 40px;
+}
+.footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--navy); font-weight: 700; }
+.footer-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+/* ── COUNTDOWN ── */
+.countdown {
+  display: flex; justify-content: center; gap: 16px;
+  margin-top: 14px;
+}
+.countdown-unit {
+  background: rgba(11,31,58,.06);
+  border: 1px solid rgba(200,153,58,.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 58px;
+}
+.countdown-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--navy); line-height: 1;
+}
+.countdown-lbl {
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray); margin-top: 3px;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .search-card { padding: 24px 18px; }
+  .input-group { flex-direction: column; padding: 10px; gap: 8px; }
+  .input-group input { text-align: center; font-size: 16px; }
+  .btn-cari { width: 100%; justify-content: center; padding: 14px; }
+  .nilai-grid { grid-template-columns: 1fr; }
+  .nilai-item:nth-child(odd) { border-right: none; }
+  .nilai-item:last-child { border-bottom: none; }
+  .siswa-card-body { grid-template-columns: 1fr; }
+  .countdown { gap: 8px; }
+  .countdown-unit { min-width: 48px; padding: 8px 10px; }
+  .countdown-num { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <img id="logo-header" class="hero-logo" src="" alt="Logo MTs BU" onerror="this.style.display='none'">
+    <div class="hero-badge">E-SKL | MTSS BUSTANUL ULUM TGL</div>
+    <h1 class="hero-title">Pengumuman <span>Kelulusan</span></h1>
+    <div class="hero-sub" id="header-sub">Tahun Ajaran 2024/2025</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="search-card">
+    <div class="card-eyebrow">Cek Hasil Kelulusan</div>
+    <div class="card-title">Masukkan NISN Anda</div>
+    <div class="card-sub" id="form-sub" style="text-align:center;">Untuk melihat status dan nilai kelulusan Anda.</div>
+
+    <div class="input-group">
+      <input type="text" id="input-nisn" placeholder="Contoh: 0115113616"
+        maxlength="20" inputmode="numeric" autocomplete="off"
+        onkeydown="if(event.key==='Enter') cariHasil()">
+      <button class="btn-cari" id="btn-cari" onclick="cariHasil()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Cari
+      </button>
+    </div>
+
+    <div class="msg-box" id="msg-box"></div>
+  </div>
+
+  <!-- HASIL -->
+  <div id="hasil">
+    <div class="gold-divider"><span>Hasil Kelulusan</span></div>
+
+    <!-- Status banner -->
+    <div id="status-banner" class="status-banner lulus">
+      <div class="status-icon-wrap">
+        <img id="foto-siswa" src="" alt="Foto Siswa">
+        <span id="status-icon" style="font-size:36px;">✅</span>
+      </div>
+      <div class="status-label" id="status-label">Selamat!</div>
+      <div class="status-text" id="status-text">LULUS</div>
+      <div class="status-tahun" id="status-tahun">Tahun Ajaran 2024/2025</div>
+    </div>
+
+    <!-- Data siswa -->
+    <div class="siswa-card">
+      <div class="siswa-card-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="siswa-card-header-title">Data Siswa</span>
+      </div>
+      <div class="siswa-card-body">
+        <div class="siswa-field full">
+          <label>Nama Lengkap</label>
+          <div class="val" id="res-nama" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;">—</div>
+        </div>
+        <div class="siswa-field">
+          <label>NISN</label>
+          <div class="val" id="res-nisn" style="font-family:monospace;letter-spacing:.08em;">—</div>
+        </div>
+        <div class="siswa-field">
+          <label>Kelas</label>
+          <div class="val" id="res-kelas">—</div>
+        </div>
+        <div class="siswa-field">
+          <label>No. Peserta Ujian</label>
+          <div class="val" id="res-no-peserta" style="font-family:monospace;font-size:13px;">—</div>
+        </div>
+        <div class="siswa-field">
+          <label>No. SKL</label>
+          <div class="val" id="res-no-skl" style="font-family:monospace;font-size:13px;">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nilai -->
+    <div class="nilai-card">
+      <div class="nilai-card-header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span class="nilai-card-header-title">Nilai Akhir</span>
+        </div>
+        <div id="nilai-rata" style="font-size:12px;color:rgba(255,255,255,.4);"></div>
+      </div>
+      <div class="nilai-grid" id="tabel-nilai"></div>
+    </div>
+
+    <!-- Aksi -->
+    <div class="aksi-group">
+      <button class="btn-download" onclick="downloadSKL()">
+        <div class="btn-download-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div>
+          <div style="font-size:15px;">Download SKL (PDF)</div>
+          <div style="font-size:11px;opacity:.6;font-weight:400;">Surat Keterangan Lulus resmi</div>
+        </div>
+      </button>
+      <button class="btn-reset" onclick="resetForm()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Kembali · Cari NISN Lain
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <!-- <div class="footer-logo">MTSS BUSTANULUM TGL</div> -->
+  <div class="footer-sub">© 2026 MTs. Bustanul Ulum</div>
+</div>
+
+<script>
+const API = 'api/skl.php';
+let dataHasil = null;
+let countdownInterval = null;
+
+window.addEventListener('load', async () => {
+  try {
+    const r = await fetch(`${API}?action=setting_publik`);
+    const d = await r.json();
+    if (d.success && d.data) {
+      const s = d.data;
+      const input = document.getElementById('input-nisn');
+      const btn = document.getElementById('btn-cari');
+      if (!s.aktif) {
+        showInfoBox('🔒', '<strong>Belum tersedia</strong><br>Pengumuman kelulusan belum tersedia. Silakan cek kembali nanti.');
+        btn.disabled = input.disabled = true;
+      } else if (!s.sudah_buka) {
+        const tglBuka = new Date(s.tanggal_buka);
+        const tglStr = tglBuka.toLocaleString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+        document.getElementById('header-sub').textContent = `Tahun Ajaran ${s.tahun_ajaran}`;
+        const formSub = document.getElementById('form-sub');
+        formSub.textContent = 'Pengumuman belum dibuka. Silakan tunggu sesuai jadwal.';
+        formSub.style.textAlign = 'center';
+        showCountdown(tglBuka, s.tahun_ajaran, tglStr);
+        btn.disabled = input.disabled = true;
+      } else {
+        document.getElementById('header-sub').textContent = `Tahun Ajaran ${s.tahun_ajaran}`;
+        // Pastikan form aktif
+        document.getElementById('input-nisn').disabled = false;
+        document.getElementById('btn-cari').disabled = false;
+      }
+    } else {
+      // API berhasil tapi tidak ada data setting — tetap aktifkan form
+      document.getElementById('input-nisn').disabled = false;
+      document.getElementById('btn-cari').disabled = false;
+    }
+  } catch(e) {
+    // Jika fetch gagal sama sekali — tetap aktifkan form agar pencarian bisa dicoba
+    document.getElementById('input-nisn').disabled = false;
+    document.getElementById('btn-cari').disabled = false;
+  }
+
+  try {
+    const r2 = await fetch('api/pengaturan.php');
+    const d2 = await r2.json();
+    if (d2.success && d2.data) {
+      window._pg = d2.data;
+      const logoKiri = d2.data.logo_kiri;
+      if (logoKiri) document.getElementById('logo-header').src = logoKiri;
+    }
+  } catch(e) {}
+});
+
+function showCountdown(tglBuka, tahun, tglStr) {
+  const msgBox = document.getElementById('msg-box');
+  msgBox.innerHTML = `
+    <div class="info-box" style="flex-direction:column;gap:10px;background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde047;color:#713f12;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:20px;flex-shrink:0;">⏳</span>
+        <div>
+          <strong style="display:block;margin-bottom:2px;">Pengumuman akan dibuka</strong>
+          <span style="font-size:12px;opacity:.8;">Tahun Ajaran ${tahun} · ${tglStr} WIB</span>
+        </div>
+      </div>
+      <div class="countdown" id="countdown-wrap">
+        <div class="countdown-unit"><div class="countdown-num" id="cd-hari">--</div><div class="countdown-lbl">Hari</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-jam">--</div><div class="countdown-lbl">Jam</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-menit">--</div><div class="countdown-lbl">Menit</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-detik">--</div><div class="countdown-lbl">Detik</div></div>
+      </div>
+    </div>`;
+
+  function tick() {
+    const diff = tglBuka - new Date();
+    if (diff <= 0) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      // Jangan reload — langsung aktifkan form pencarian
+      document.getElementById('msg-box').innerHTML = '';
+      document.getElementById('input-nisn').disabled = false;
+      document.getElementById('btn-cari').disabled = false;
+      document.getElementById('form-sub').textContent = 'Masukkan Nomor Induk Siswa Nasional (NISN) untuk melihat status dan nilai kelulusan Anda.';
+      return;
+    }
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor((diff%86400000)/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    document.getElementById('cd-hari').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-jam').textContent  = String(h).padStart(2,'0');
+    document.getElementById('cd-menit').textContent= String(m).padStart(2,'0');
+    document.getElementById('cd-detik').textContent= String(s).padStart(2,'0');
+  }
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
+function showInfoBox(icon, html) {
+  document.getElementById('msg-box').innerHTML = `<div class="info-box"><span class="info-box-icon">${icon}</span><div>${html}</div></div>`;
+}
+function showError(msg) {
+  document.getElementById('msg-box').innerHTML = `<div class="error-box"><span style="font-size:18px;flex-shrink:0;">⚠️</span><span>${msg}</span></div>`;
+}
+function clearMsg() { document.getElementById('msg-box').innerHTML = ''; }
+
+async function cariHasil() {
+  const nisn = document.getElementById('input-nisn').value.trim();
+  if (!nisn) { showError('Masukkan NISN terlebih dahulu.'); return; }
+
+  clearMsg();
+  document.getElementById('hasil').style.display = 'none';
+  const btn = document.getElementById('btn-cari');
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner"></div> Mencari...`;
+
+  try {
+    const r = await fetch(`${API}?action=cek&nisn=${encodeURIComponent(nisn)}`);
+    const d = await r.json();
+    if (!d.success) { showError(d.message || 'Data tidak ditemukan.'); return; }
+    dataHasil = d.data;
+    tampilkanHasil(d.data);
+  } catch(e) {
+    showError('Gagal menghubungi server. Periksa koneksi internet Anda.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Cari`;
+  }
+}
+
+async function tampilkanHasil(data) {
+  const status     = parseInt(data.status_lulus); // 1=lulus, 2=bersyarat, 0=tidak
+  const lulus      = status === 1;
+  const bersyarat  = status === 2;
+
+  const banner = document.getElementById('status-banner');
+  banner.className = 'status-banner ' + (lulus ? 'lulus' : bersyarat ? 'bersyarat' : 'tidak');
+  document.getElementById('status-icon').textContent  = lulus ? '🎓' : bersyarat ? '📝' : '📋';
+  document.getElementById('status-label').textContent = lulus ? 'Selamat!' : bersyarat ? 'Perhatian' : 'Mohon Maaf';
+  document.getElementById('status-text').textContent  = lulus ? 'LULUS' : bersyarat ? 'LULUS BERSYARAT' : 'TIDAK LULUS';
+  document.getElementById('status-tahun').textContent = `Tahun Ajaran ${data.tahun_ajaran}`;
+
+  document.getElementById('res-nama').textContent  = data.nama;
+  document.getElementById('res-nisn').textContent  = data.nisn;
+  document.getElementById('res-kelas').textContent = data.kelas;
+  document.getElementById('res-no-peserta').textContent = data.no_peserta || '-';
+  document.getElementById('res-no-skl').textContent     = data.no_skl || '-';
+
+  // Tampilkan nilai & tombol download untuk lulus dan lulus bersyarat
+  const nilaiCard    = document.querySelector('.nilai-card');
+  const btnDownload  = document.querySelector('.btn-download');
+
+  if (lulus) {
+    nilaiCard.style.display   = '';
+    btnDownload.style.display = '';
+
+    const nilaiValid = data.nilai.filter(n => n.nilai !== null);
+    const rata = nilaiValid.length ? (nilaiValid.reduce((s,n) => s + n.nilai, 0) / nilaiValid.length).toFixed(1) : '-';
+    document.getElementById('nilai-rata').textContent = `Rata-rata: ${rata}`;
+
+    const grid = document.getElementById('tabel-nilai');
+    grid.innerHTML = data.nilai.map(n => {
+      const cls = n.nilai >= 80 ? 'tinggi' : n.nilai < 60 ? 'rendah' : '';
+      return `<div class="nilai-item">
+        <span class="nilai-mapel">${n.mapel}</span>
+        <span class="nilai-angka ${cls}">${n.nilai ?? '—'}</span>
+      </div>`;
+    }).join('');
+  } else {
+    nilaiCard.style.display   = 'none';
+    btnDownload.style.display = 'none';
+  }
+
+  document.getElementById('hasil').style.display = 'block';
+  document.getElementById('hasil').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Muat foto siswa
+  const fotoEl   = document.getElementById('foto-siswa');
+  const iconEl   = document.getElementById('status-icon');
+  fotoEl.style.display = 'none';
+  iconEl.style.display = '';
+  try {
+    const rf = await fetch(`api/foto.php?nisn=${encodeURIComponent(data.nisn)}`);
+    const df = await rf.json();
+    if (df.success && df.data && df.data.data) {
+      fotoEl.src = df.data.data;
+      fotoEl.style.display = 'block';
+      iconEl.style.display = 'none';
+    }
+  } catch(e) { /* tidak ada foto, tampilkan ikon default */ }
+}
+
+function resetForm() {
+  dataHasil = null;
+  document.getElementById('input-nisn').value = '';
+  document.getElementById('hasil').style.display = 'none';
+  clearMsg();
+  document.getElementById('input-nisn').focus();
+}
+
+async function downloadSKL() {
+  if (!dataHasil) return;
+  const s = dataHasil;
+  const pg = window._pg || {};
+  const { jsPDF } = window.jspdf;
+
+  const namaSekolah  = pg.nama_sekolah   || 'MTs. Bustanul Ulum';
+  const npsn         = pg.npsn            || '20583489';
+  const namaKepsek   = pg.kepala_sekolah  || 'AGUS SUPARMANTO, S.Pd.';
+  const nipKepsek    = pg.nip_kepsek      || '-';
+  const website      = pg.website         || 'www.mtsbuwaru.sch.id';
+  const kota         = pg.kota            || 'Pamekasan';
+  const logoKiri     = pg.logo_kiri  || null;
+  const logoKanan    = pg.logo_kanan || null;
+
+  // ── Helper: angka ke huruf ────────────────────────────────
+  const satuan = ['','Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan',
+                  'Sepuluh','Sebelas','Dua Belas','Tiga Belas','Empat Belas','Lima Belas',
+                  'Enam Belas','Tujuh Belas','Delapan Belas','Sembilan Belas'];
+  const puluhan = ['','','Dua Puluh','Tiga Puluh','Empat Puluh','Lima Puluh',
+                   'Enam Puluh','Tujuh Puluh','Delapan Puluh','Sembilan Puluh'];
+  function nilaiHuruf(n) {
+    if (n === null || n === undefined) return '-';
+    n = parseInt(n);
+    if (isNaN(n)) return '-';
+    if (n === 100) return 'Seratus';
+    if (n < 20) return satuan[n];
+    const p = Math.floor(n/10), s = n%10;
+    return puluhan[p] + (s > 0 ? ' ' + satuan[s] : '');
+  }
+
+  // ── Buat QR Code ──────────────────────────────────────────
+  let qrDataUrl = null;
+  try {
+    const qrUrl = `${window.location.origin}${window.location.pathname.replace(/\/[^/]*$/, '')}/api/skl.php?action=cek&nisn=${s.nisn}`;
+    const qrDiv = document.createElement('div');
+    document.body.appendChild(qrDiv);
+    await new Promise(res => {
+      new QRCode(qrDiv, { text: qrUrl, width: 128, height: 128, correctLevel: QRCode.CorrectLevel.M });
+      setTimeout(res, 500);
+    });
+    const qrEl = qrDiv.querySelector('canvas') || qrDiv.querySelector('img');
+    if (qrEl) qrDataUrl = qrEl.tagName === 'CANVAS' ? qrEl.toDataURL('image/png') : qrEl.src;
+    document.body.removeChild(qrDiv);
+  } catch(e) {}
+
+  // ── Load foto siswa dari API ────────────────────────────────
+  let fotoSiswaDataUrl = null;
+  try {
+    const fotoR = await fetch(`api/foto.php?nisn=${s.nisn}`);
+    const fotoD = await fotoR.json();
+    if (fotoD.success && fotoD.data?.data) {
+      fotoSiswaDataUrl = fotoD.data.data;
+    }
+  } catch(e) {}
+
+  // ── Tanggal tanda tangan ──────────────────────────────────
+  const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const now = new Date();
+  const tglTtd = `${kota}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+
+  // ── Inisialisasi dokumen ──────────────────────────────────
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const lm = 25, rm = 20, pw = 210 - lm - rm;
+
+  // ============================================================
+  // FUNGSI HELPER: Gambar Kop Surat
+  // ============================================================
+  // Konversi SVG URL ke PNG untuk jsPDF
+  async function svgUrlToPng(url, px) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = c.height = px;
+        c.getContext('2d').drawImage(img, 0, 0, px, px);
+        resolve(c.toDataURL('image/png'));
+      };
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+  }
+  let _kemenagPng = null;
+  async function getKemenagPng() {
+    if (!_kemenagPng) _kemenagPng = await svgUrlToPng(
+      'https://upload.wikimedia.org/wikipedia/commons/8/82/Seal_of_the_Ministry_of_Religious_Affairs_of_the_Republic_of_Indonesia.svg',
+      200);
+    return _kemenagPng;
+  }
+
+  // Load logo MTs sekali saja (cache) — dari folder assets/ lokal
+  let _mtsPng = null;
+  async function getMtsPng() {
+    if (!_mtsPng) {
+      _mtsPng = await new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const c = document.createElement('canvas');
+          c.width = c.height = 200;
+          c.getContext('2d').drawImage(img, 0, 0, 200, 200);
+          resolve(c.toDataURL('image/png'));
+        };
+        img.onerror = () => resolve(null);
+        img.src = './assets/logo-mts.png';
+      });
+    }
+    return _mtsPng;
+  }
+
+  async function drawKop(doc, logoKiri, logoKanan, namaSekolah, npsn, website) {
+    const tm = 10, logoSize = 25;
+    // Logo kiri — Kemenag RI
+    const kemenagPng = await getKemenagPng();
+    if (kemenagPng) {
+      try { doc.addImage(kemenagPng, 'PNG', lm, tm, logoSize, logoSize); } catch(e) {}
+    } else {
+      doc.setFillColor(0,82,165);
+      doc.roundedRect(lm, tm, logoSize, logoSize, 3, 3, 'F');
+      doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(6);
+      doc.text('KEMENAG', lm+logoSize/2, tm+10, {align:'center'});
+      doc.text('RI', lm+logoSize/2, tm+17, {align:'center'});
+    }
+    // Logo kanan — MTs. Bustanul Ulum
+    const mtsPng = await getMtsPng();
+    if (mtsPng) {
+      try { doc.addImage(mtsPng, 'PNG', 210 - rm - logoSize, tm, logoSize, logoSize); } catch(e) {}
+    }
+    // Teks kop
+    doc.setTextColor(0,0,0);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+    doc.text('KEMENTERIAN AGAMA REPUBLIK INDONESIA', 105, tm+5, {align:'center'});
+    doc.setFont('helvetica','bold'); doc.setFontSize(14);
+    doc.text(namaSekolah.toUpperCase(), 105, tm+11, {align:'center'});
+    doc.setFont('helvetica','italic'); doc.setFontSize(8.5);
+    doc.text('JLN. PONTREN BUSTANUL ULUM', 105, tm+17, {align:'center'});
+    doc.setFont('helvetica','normal'); doc.setFontSize(8);
+    doc.text(`Kecamatan Waru, Kabupaten Pamekasan - Jawa Timur`, 105, tm+22, {align:'center'});
+    // Garis kop
+    doc.setDrawColor(0); doc.setLineWidth(1.2);
+    doc.line(lm, tm+27, 210-rm, tm+27);
+    doc.setLineWidth(0.3);
+    doc.line(lm, tm+28.5, 210-rm, tm+28.5);
+    return tm + 33; // y setelah kop
+  }
+
+  // ============================================================
+  // HALAMAN 1: SURAT KETERANGAN LULUS
+  // ============================================================
+  let y = await drawKop(doc, logoKiri, logoKanan, namaSekolah, npsn, website);
+  y += 5;
+
+  // Judul
+  doc.setFont('helvetica','bold'); doc.setFontSize(13);
+  doc.text('SURAT KETERANGAN LULUS', 105, y, {align:'center'}); y += 6;
+  doc.setFontSize(12);
+  doc.text(`TAHUN AJARAN ${s.tahun_ajaran}`, 105, y, {align:'center'}); y += 6;
+  doc.setFontSize(11);
+  const noSkl = s.no_skl || '—';
+  doc.text(`Nomor : ${noSkl}`, 105, y, {align:'center'});
+  y += 12;
+
+  // Pembuka
+  doc.setFont('helvetica','normal'); doc.setFontSize(11);
+  const pembuka = 'Yang bertanda tangan di bawah ini menerangkan bahwa:';
+  doc.text(pembuka, lm, y); y += 10;
+
+  // Identitas siswa — layout tabel
+  const identitas = [
+    ['nama',                     s.nama],
+    ['tempat dan tanggal lahir', s.ttl || '-'],
+    ['nomor induk siswa nasional', s.nisn],
+    ['nomor peserta ujian madrasah', s.no_peserta || '-'],
+    ['satuan pendidikan',        namaSekolah.toUpperCase()],
+    ['nomor pokok sekolah nasional', npsn],
+  ];
+
+  doc.setFontSize(11);
+  const colKey = lm + 5;
+  const colSep = lm + 70;
+  const colVal = lm + 75;
+
+  identitas.forEach(([k, v]) => {
+    doc.setFont('helvetica','normal');
+    doc.text(k, colKey, y);
+    doc.text(':', colSep, y);
+    doc.setFont('helvetica','bold');
+    // Garis bawah pada nilai
+    doc.setLineWidth(0.3); doc.setDrawColor(0);
+    doc.line(colVal, y+1, 210-rm, y+1);
+    doc.text(String(v), colVal, y);
+    doc.setFont('helvetica','normal');
+    y += 8;
+  });
+  y += 4;
+
+  // Teks kelulusan
+  doc.setFont('helvetica','normal'); doc.setFontSize(11);
+  const keputusan  = `304/SKL/MTSS.BU/VI/2026`;
+  const statusInt  = parseInt(s.status_lulus);
+  const isiParagraf = statusInt === 1
+    ? `dinyatakan LULUS berdasarkan surat keputusan kepala ${namaSekolah.toUpperCase()} Nomor ${keputusan} tanggal 02 Juni ${now.getFullYear()} setelah memenuhi seluruh kriteria sesuai dengan peraturan perundang-undangan.`
+    : statusInt === 2
+    ? `dinyatakan LULUS BERSYARAT berdasarkan surat keputusan kepala ${namaSekolah.toUpperCase()} Nomor ${keputusan} tanggal 02 Juni ${now.getFullYear()} dengan ketentuan memenuhi persyaratan administratif yang ditetapkan madrasah.`
+    : `dinyatakan TIDAK LULUS berdasarkan hasil evaluasi akhir madrasah sesuai ketentuan yang berlaku.`;
+
+  const isiLines = doc.splitTextToSize(isiParagraf, pw);
+  // Bold pada kata LULUS / TIDAK LULUS
+  doc.setFont('helvetica','normal');
+  doc.text(isiLines, lm, y, {align:'justify', maxWidth: pw}); y += isiLines.length * 6 + 6;
+
+  // Kalimat penutup
+  const penutup = 'Demikian surat keterangan ini dibuat untuk digunakan sebagaimana mestinya.';
+  doc.text(doc.splitTextToSize(penutup, pw), lm, y); y += 14;
+
+  // ── Area TTD + Foto ──────────────────────────────────────
+  const ttdX = 210 - rm - 50;   // posisi X blok TTD (kanan)
+  const fotoX = 105 - 12;       // posisi X kotak foto (tengah)
+  const ttdCenterX1 = ttdX + 25;
+
+  // Kotak Foto 3x4
+  doc.setDrawColor(0); doc.setLineWidth(0.4);
+  doc.rect(fotoX, y, 24, 32);
+  if (fotoSiswaDataUrl) {
+    try { doc.addImage(fotoSiswaDataUrl, 'JPEG', fotoX+0.5, y+0.5, 23, 31); } catch(e) {
+      try { doc.addImage(fotoSiswaDataUrl, 'PNG', fotoX+0.5, y+0.5, 23, 31); } catch(e2) {}
+    }
+  } else {
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(100,100,100);
+    doc.text('Foto', fotoX+12, y+14, {align:'center'});
+    doc.text('3x4',  fotoX+12, y+20, {align:'center'});
+    doc.setTextColor(0,0,0);
+  }
+
+  // Blok TTD kanan: kota/tgl → Kepala Madrasah → QR → nama → NIP
+  doc.setFont('helvetica','normal'); doc.setFontSize(10);
+  doc.text(tglTtd, ttdCenterX1, y, {align:'center'});
+  doc.text('Kepala Madrasah,', ttdCenterX1, y + 6, {align:'center'});
+
+  const qrSz1 = 22;
+  if (qrDataUrl) {
+    doc.addImage(qrDataUrl, 'PNG', ttdCenterX1 - qrSz1/2, y + 10, qrSz1, qrSz1);
+  } else {
+    doc.setDrawColor(180); doc.setLineWidth(0.3);
+    doc.rect(ttdCenterX1 - qrSz1/2, y + 10, qrSz1, qrSz1);
+  }
+
+  const namaY1 = y + 10 + qrSz1 + 3;
+  doc.setFont('helvetica','bold'); doc.setFontSize(10);
+  doc.text(namaKepsek, ttdCenterX1, namaY1, {align:'center'});
+  const tw = doc.getTextWidth(namaKepsek);
+  doc.setLineWidth(0.35); doc.line(ttdCenterX1 - tw/2, namaY1+1, ttdCenterX1 + tw/2, namaY1+1);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+  doc.text(`NIP. ${nipKepsek}`, ttdCenterX1, namaY1 + 6, {align:'center'});
+
+  // ============================================================
+  // HALAMAN 2: TRANSKRIP NILAI
+  // ============================================================
+  doc.addPage();
+  y = await drawKop(doc, logoKiri, logoKanan, namaSekolah, npsn, website);
+  y += 3;
+
+  // ── Judul dua baris ke bawah ───────────────────────────────
+  doc.setFont('helvetica','bold'); doc.setFontSize(12);
+  doc.text('TRANSKRIP NILAI', 105, y, {align:'center'}); y += 6;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9);
+  doc.text('MADRASAH TSANAWIYAH', 105, y, {align:'center'}); y += 6;
+  doc.text(`TAHUN AJARAN ${s.tahun_ajaran}`, 105, y, {align:'center'}); y += 7;
+
+  // ── Identitas 1 kolom penuh ───────────────────────────────
+  const idRows = [
+    ['Satuan Pendidikan',  namaSekolah.toUpperCase()],
+    ['NPSN',               npsn],
+    ['Nama Lengkap',       s.nama],
+    ['NISN',               s.nisn],
+    ['No. SKL',            s.no_skl || '-'],
+    ['Tanggal Kelulusan',  `02 Juni ${now.getFullYear()}`],
+  ];
+  const rowHId = 5.5;
+  const colKey2 = lm;
+  const colSep2 = lm + 48;
+  const colVal2 = lm + 51;
+  doc.setFontSize(8.5);
+  idRows.forEach(([k, v], i) => {
+    const yy = y + i * rowHId;
+    doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80);
+    doc.text(k, colKey2, yy);
+    doc.setTextColor(0,0,0);
+    doc.text(':', colSep2, yy);
+    doc.setFont('helvetica','bold'); doc.setTextColor(0,0,0);
+    const vLines = doc.splitTextToSize(String(v), pw - 56);
+    doc.text(vLines[0], colVal2, yy);
+  });
+  doc.setTextColor(0,0,0);
+  y += idRows.length * rowHId + 3;
+
+  // ── Tabel Nilai ───────────────────────────────────────────
+  const nilaiValid2 = s.nilai.filter(n => n.nilai !== null);
+  const totalNilai2 = nilaiValid2.reduce((acc, n) => acc + Number(n.nilai), 0);
+  const rataRata2   = nilaiValid2.length ? (totalNilai2 / nilaiValid2.length) : 0;
+  const rataStr2    = nilaiValid2.length ? rataRata2.toFixed(2) : '-';
+
+  const tblX2 = lm, tblW2 = pw;
+  const rH = 5.8;
+  // Kolom: No (6%) | Mapel (54%) | Angka (18%) | Huruf (22%)
+  const cNo    = tblW2 * 0.06;
+  const cMapel = tblW2 * 0.52;
+  const cAngka = tblW2 * 0.18;
+  const cHuruf = tblW2 * 0.24;
+
+  function rowLine2(yy) {
+    [cNo, cNo+cMapel, cNo+cMapel+cAngka].forEach(x => {
+      doc.setDrawColor(140); doc.setLineWidth(0.25);
+      doc.line(tblX2+x, yy, tblX2+x, yy+rH);
+    });
+  }
+
+  function drawRow2(yy, opts) {
+    const fill = opts.fill || null;
+    if (fill) {
+      doc.setFillColor(...fill);
+      doc.rect(tblX2, yy, tblW2, rH, 'F');
+    }
+    doc.setDrawColor(140); doc.setLineWidth(0.25);
+    doc.rect(tblX2, yy, tblW2, rH);
+
+    const midY = yy + rH * 0.68;
+    doc.setTextColor(0,0,0);
+
+    if (opts.group) {
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
+      doc.text(opts.mapel, tblX2 + 2, midY);
+      return;
+    }
+    if (opts.header) {
+      // Gambar header sekaligus tinggi 2 baris
+      const h2 = rH * 2;
+      doc.setFillColor(185,185,185);
+      doc.rect(tblX2, yy, tblW2, h2, 'F');
+      doc.setDrawColor(140); doc.setLineWidth(0.25);
+      // Border luar
+      doc.rect(tblX2, yy, tblW2, h2);
+      // Garis vertikal: setelah No, setelah Mapel, setelah Angka
+      doc.line(tblX2 + cNo,               yy, tblX2 + cNo,               yy + h2);
+      doc.line(tblX2 + cNo + cMapel,      yy, tblX2 + cNo + cMapel,      yy + h2);
+      doc.line(tblX2 + cNo + cMapel + cAngka, yy + h2/2, tblX2 + cNo + cMapel + cAngka, yy + h2);
+      // Garis horizontal tengah — hanya di kolom Nilai
+      doc.line(tblX2 + cNo + cMapel, yy + h2/2, tblX2 + tblW2, yy + h2/2);
+      // Teks
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(0,0,0);
+      // "No" — tengah vertikal 2 baris
+      doc.text('No', tblX2 + cNo/2, yy + h2 * 0.62, {align:'center'});
+      // "Mata Pelajaran" — tengah vertikal 2 baris
+      doc.text('Mata Pelajaran', tblX2 + cNo + cMapel/2, yy + h2 * 0.62, {align:'center'});
+      // "Nilai" — baris atas kolom nilai
+      doc.text('Nilai', tblX2 + cNo + cMapel + (cAngka+cHuruf)/2, yy + h2 * 0.30, {align:'center'});
+      // "Angka" & "Huruf" — baris bawah
+      doc.text('Angka', tblX2 + cNo + cMapel + cAngka/2,           yy + h2 * 0.78, {align:'center'});
+      doc.text('Huruf', tblX2 + cNo + cMapel + cAngka + cHuruf/2,  yy + h2 * 0.78, {align:'center'});
+      return;
+    }
+
+    // Untuk semua baris lain: gambar garis vertikal internal
+    rowLine2(yy);
+
+    // Baris data biasa
+    doc.setFont(opts.bold ? 'helvetica' : 'helvetica', opts.bold ? 'bold' : 'normal');
+    doc.setFontSize(8.5);
+    if (opts.no) doc.text(String(opts.no), tblX2 + cNo/2, midY, {align:'center'});
+    const indent = opts.indent ? 5 : 2;
+    doc.text(opts.mapel, tblX2 + cNo + indent, midY);
+
+    if (opts.nilai !== null && opts.nilai !== undefined) {
+      doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+      doc.text(String(opts.nilai), tblX2 + cNo + cMapel + cAngka/2, midY, {align:'center'});
+      doc.setFont('helvetica','italic'); doc.setFontSize(7.5);
+      const htxt = nilaiHuruf(opts.nilai);
+      const hlines = doc.splitTextToSize(htxt, cHuruf - 3);
+      if (hlines.length > 1) {
+        doc.text(hlines[0], tblX2 + cNo + cMapel + cAngka + cHuruf/2, yy + rH*0.42, {align:'center'});
+        doc.text(hlines[1], tblX2 + cNo + cMapel + cAngka + cHuruf/2, yy + rH*0.82, {align:'center'});
+      } else {
+        doc.text(htxt, tblX2 + cNo + cMapel + cAngka + cHuruf/2, midY, {align:'center'});
+      }
+    }
+  }
+
+  // Susun semua baris tabel
+  const tableRows = [
+    { header:true },
+    // Kelompok A
+    { group:true, fill:[225,225,225], mapel:'Kelompok A' },
+    { no:'1', mapel:'Pendidikan Agama Islam', nilai:null, bold:true },
+    { no:'', mapel:'Al-Quran Hadits',   nilai: s.nilai.find(n=>n.mapel==='Al-Quran Hadits')?.nilai,   indent:true },
+    { no:'', mapel:'Akidah Akhlak',     nilai: s.nilai.find(n=>n.mapel==='Aqidah Akhlak')?.nilai,     indent:true },
+    { no:'', mapel:'Fikih',             nilai: s.nilai.find(n=>n.mapel==='Fiqih')?.nilai,             indent:true },
+    { no:'', mapel:'Sejarah Kebudayaan Islam', nilai: s.nilai.find(n=>n.mapel==='SKI')?.nilai,        indent:true },
+    { no:'2', mapel:'Pend. Pancasila & Kewarganegaraan', nilai: s.nilai.find(n=>n.mapel==='PPKn')?.nilai },
+    { no:'3', mapel:'Bahasa Indonesia',  nilai: s.nilai.find(n=>n.mapel==='Bahasa Indonesia')?.nilai },
+    { no:'4', mapel:'Bahasa Arab',       nilai: s.nilai.find(n=>n.mapel==='Bahasa Arab')?.nilai },
+    { no:'5', mapel:'Matematika',        nilai: s.nilai.find(n=>n.mapel==='Matematika')?.nilai },
+    { no:'6', mapel:'Ilmu Pengetahuan Alam',    nilai: s.nilai.find(n=>n.mapel==='IPA')?.nilai },
+    { no:'7', mapel:'Ilmu Pengetahuan Sosial',  nilai: s.nilai.find(n=>n.mapel==='IPS')?.nilai },
+    { no:'8', mapel:'Bahasa Inggris',    nilai: s.nilai.find(n=>n.mapel==='Bahasa Inggris')?.nilai },
+    // Kelompok B
+    { group:true, fill:[225,225,225], mapel:'Kelompok B' },
+    { no:'1', mapel:'Seni Budaya',       nilai: s.nilai.find(n=>n.mapel==='Seni Budaya')?.nilai },
+    { no:'2', mapel:'Pend. Jasmani, Olahraga dan Kesehatan', nilai: s.nilai.find(n=>n.mapel==='PJOK')?.nilai },
+    { no:'3', mapel:'Prakarya dan/atau Informatika', nilai: s.nilai.find(n=>n.mapel==='Prakarya & TIK')?.nilai },
+    { no:'4', mapel:'Muatan Lokal',      nilai: null, bold:true },
+    { no:' ', mapel:'A. Bahasa Daerah', nilai: s.nilai.find(n=>n.mapel==='Muatan Lokal')?.nilai, indent:true },
+    // Rata-rata
+    { rata: true, fill:[200,200,200], nilai: rataStr2 },
+  ];
+
+  tableRows.forEach(row => {
+    if (row.rata) {
+      doc.setFillColor(...row.fill); doc.rect(tblX2, y, tblW2, rH, 'F');
+      doc.setDrawColor(140); doc.setLineWidth(0.25); doc.rect(tblX2, y, tblW2, rH);
+      rowLine2(y);
+      const midY = y + rH * 0.68;
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(0,0,0);
+      doc.text('Rata-Rata', tblX2 + cNo + cMapel/2, midY, {align:'center'});
+      doc.text(row.nilai, tblX2 + cNo + cMapel + cAngka/2, midY, {align:'center'});
+      doc.setFont('helvetica','italic'); doc.setFontSize(7.5);
+      const rrHuruf = nilaiHuruf(Math.round(rataRata2)) + ' Koma ' +
+        (rataStr2.includes('.') ? (['Nol','Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan'][parseInt(rataStr2.split('.')[1]?.[0])]||'') : '');
+      const rrLines = doc.splitTextToSize(rrHuruf, cHuruf - 3);
+      if (rrLines.length > 1) {
+        doc.text(rrLines[0], tblX2 + cNo + cMapel + cAngka + cHuruf/2, y + rH*0.42, {align:'center'});
+        doc.text(rrLines[1], tblX2 + cNo + cMapel + cAngka + cHuruf/2, y + rH*0.82, {align:'center'});
+      } else {
+        doc.text(rrHuruf, tblX2 + cNo + cMapel + cAngka + cHuruf/2, midY, {align:'center'});
+      }
+    } else {
+      drawRow2(y, row);
+      y += row.header ? rH * 2 : rH;
+      return;
+    }
+    y += rH;
+  });
+
+  y += 8; // gap setelah tabel
+
+  // ── Area bawah: TTD kanan + QR di bawah tanda tangan (seperti dokumen resmi) ──
+  const botY = y;
+  const ttdX2 = 210 - rm - 52;
+  const ttdCenterX = ttdX2 + 26;
+
+  // Kota dan tanggal
+  doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+  doc.text(tglTtd, ttdCenterX, botY, {align:'center'});
+  // Jabatan
+  doc.text('Kepala Madrasah,', ttdCenterX, botY + 5.5, {align:'center'});
+
+  // QR Code menggantikan ruang TTD
+  const qrSz = 24;
+  if (qrDataUrl) {
+    doc.addImage(qrDataUrl, 'PNG', ttdCenterX - qrSz/2, botY + 8, qrSz, qrSz);
+  } else {
+    // Kotak placeholder jika QR gagal
+    doc.setDrawColor(180); doc.setLineWidth(0.3);
+    doc.rect(ttdCenterX - qrSz/2, botY + 8, qrSz, qrSz);
+  }
+
+  // Nama dan NIP di bawah QR
+  const namaY = botY + 8 + qrSz + 4;
+  doc.setFont('helvetica','bold'); doc.setFontSize(9.5);
+  doc.text(namaKepsek, ttdCenterX, namaY, {align:'center'});
+  // Garis bawah nama
+  const tw2 = doc.getTextWidth(namaKepsek);
+  doc.setLineWidth(0.35); doc.line(ttdCenterX - tw2/2, namaY+1, ttdCenterX + tw2/2, namaY+1);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9);
+  doc.text(`NIP. ${nipKepsek}`, ttdCenterX, namaY + 5.5, {align:'center'});
+
+  // Simpan PDF
+  doc.save(`SKL_${s.nisn}_${s.nama.replace(/ /g,'_')}.pdf`);
+}
+</script>
+</body>
+</html>

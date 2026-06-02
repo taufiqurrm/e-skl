@@ -902,7 +902,10 @@ async function downloadSKL() {
   // ── Buat QR Code ──────────────────────────────────────────
   let qrDataUrl = null;
   try {
-    const qrUrl = `${window.location.origin}${window.location.pathname.replace(/\/[^/]*$/, '')}/api/skl.php?action=cek&nisn=${s.nisn}`;
+    const baseUrl = `${window.location.origin}${window.location.pathname.replace(/\/[^/]*$/, '')}`;
+    const qrUrl = s.no_skl
+      ? `${baseUrl}/verifikasi.html?no_skl=${encodeURIComponent(s.no_skl)}`
+      : `${baseUrl}/verifikasi.html?nisn=${encodeURIComponent(s.nisn)}`;
     const qrDiv = document.createElement('div');
     document.body.appendChild(qrDiv);
     await new Promise(res => {

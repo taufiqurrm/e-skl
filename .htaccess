@@ -41,4 +41,11 @@ DirectoryIndex index.html
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^admin$ admin.html [L]
+
+    # Redirect QR Code lama ke verifikasi.html
+    # Hanya berlaku untuk akses browser langsung (bukan fetch/XMLHttpRequest)
+    RewriteCond %{QUERY_STRING} action=cek&nisn=([0-9]+)
+    RewriteCond %{HTTP_ACCEPT} text/html [NC]
+    RewriteCond %{HTTP:X-Requested-With} !XMLHttpRequest [NC]
+    RewriteRule ^api/skl\.php$ /verifikasi.html?nisn=%1 [R=302,L]
 </IfModule>

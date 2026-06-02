@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi SKL — MTs. Bustanul Ulum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0b1f3a;
+    --green:  #15803d;
+    --green2: #dcfce7;
+    --orange: #c2410c;
+    --orng2:  #ffedd5;
+    --red:    #b91c1c;
+    --red2:   #fee2e2;
+    --gold:   #b45309;
+    --gold2:  #fef3c7;
+    --ink:    #1e293b;
+    --muted:  #64748b;
+    --border: #e2e8f0;
+    --bg:     #f8fafc;
+    --white:  #ffffff;
+    --radius: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--navy);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+  .site-header .shield {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg,#1d4ed8,#3b82f6);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .site-header h1 {
+    font-size: 15px; font-weight: 700;
+    color: #fff; line-height: 1.3;
+  }
+  .site-header p {
+    font-size: 11px; color: #94a3b8; font-weight: 400;
+  }
+  .header-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    color: #34d399; border: 1px solid #34d399;
+    padding: 4px 10px; border-radius: 999px;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+
+  /* ── Main wrapper ── */
+  main {
+    flex: 1;
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 16px 60px;
+  }
+
+  /* ── Loading / Error state ── */
+  .state-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 60px 32px;
+    text-align: center;
+    box-shadow: 0 1px 8px rgba(0,0,0,.07);
+    border: 1px solid var(--border);
+  }
+  .state-card .icon { font-size: 52px; margin-bottom: 16px; }
+  .state-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .state-card p  { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  /* Spinner */
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid var(--border);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Result card ── */
+  .result-wrap { display: flex; flex-direction: column; gap: 20px; }
+
+  /* Status banner besar */
+  .status-banner {
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    display: flex; align-items: center; gap: 20px;
+    position: relative; overflow: hidden;
+  }
+  .status-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: .07;
+    background: repeating-linear-gradient(
+      45deg, #fff 0, #fff 1px, transparent 0, transparent 50%
+    );
+    background-size: 20px 20px;
+  }
+  .status-banner.lulus      { background: var(--green); color: #fff; }
+  .status-banner.bersyarat  { background: var(--orange); color: #fff; }
+  .status-banner.tidak      { background: var(--red); color: #fff; }
+
+  .status-foto {
+    width: 80px; height: 100px;
+    object-fit: cover; border-radius: 8px;
+    border: 3px solid rgba(255,255,255,.4);
+    flex-shrink: 0; background: rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  .status-foto img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+
+  .status-info { flex: 1; min-width: 0; }
+  .status-info .label {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    opacity: .75; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .status-info .nama {
+    font-family: 'Amiri', serif;
+    font-size: 26px; font-weight: 700; line-height: 1.2;
+    margin-bottom: 6px; word-break: break-word;
+  }
+  .status-info .nisn-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,.18);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+  }
+  .status-badge {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(255,255,255,.22);
+    border: 2px solid rgba(255,255,255,.4);
+    border-radius: 10px; padding: 6px 14px;
+    font-size: 15px; font-weight: 800; letter-spacing: .04em;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── Section card ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+  }
+  .card-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    background: #f8fafc;
+  }
+  .card-head .ico {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .card-head .ico.navy { background: #dbeafe; }
+  .card-head .ico.green { background: #dcfce7; }
+  .card-head h3 { font-size: 14px; font-weight: 700; color: var(--navy); }
+
+  /* ── Info rows ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .info-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .info-item:nth-child(2n) { border-right: none; }
+  .info-item:nth-last-child(-n+2) { border-bottom: none; }
+  .info-item.full {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+  .info-item .lbl {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    letter-spacing: .07em; text-transform: uppercase; margin-bottom: 3px;
+  }
+  .info-item .val {
+    font-size: 14px; font-weight: 600; color: var(--ink);
+    word-break: break-word;
+  }
+  .info-item .val.big {
+    font-family: 'Amiri', serif; font-size: 18px;
+  }
+
+  /* ── Status pill ── */
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+  }
+  .pill.lulus     { background: var(--green2); color: var(--green); }
+  .pill.bersyarat { background: var(--orng2);  color: var(--orange); }
+  .pill.tidak     { background: var(--red2);   color: var(--red); }
+
+
+
+  /* ── Verifikasi stamp ── */
+  .verify-stamp {
+    background: linear-gradient(135deg, #0b1f3a 0%, #1e3a5f 100%);
+    border-radius: var(--radius);
+    padding: 24px;
+    color: #fff;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .verify-icon {
+    width: 64px; height: 64px; flex-shrink: 0;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 0 0 6px rgba(34,197,94,.2);
+  }
+  .verify-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .verify-text p  { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+  .verify-text .waktu {
+    margin-top: 8px;
+    font-size: 12px; font-weight: 600;
+    color: #34d399;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── Sekolah info ── */
+  .sekolah-footer {
+    text-align: center; padding: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .sekolah-footer h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+  .sekolah-footer p  { font-size: 12px; color: var(--muted); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 20px 16px;
+    font-size: 11px; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Fade-in animation ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .result-wrap > * {
+    animation: fadeUp .45s ease both;
+  }
+  .result-wrap > *:nth-child(1) { animation-delay: .05s; }
+  .result-wrap > *:nth-child(2) { animation-delay: .12s; }
+  .result-wrap > *:nth-child(3) { animation-delay: .19s; }
+  .result-wrap > *:nth-child(4) { animation-delay: .26s; }
+  .result-wrap > *:nth-child(5) { animation-delay: .33s; }
+
+  @media (max-width: 520px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .info-item { border-right: none !important; }
+    .info-item:last-child { border-bottom: none; }
+    .info-item.full + .info-item { border-bottom: 1px solid var(--border); }
+    .status-banner { flex-direction: column; align-items: flex-start; }
+    .status-badge  { position: static; margin-top: 12px; }
+    .status-foto   { width: 64px; height: 80px; }
+    .status-info .nama { font-size: 21px; }
+    .verify-stamp  { flex-direction: column; text-align: center; }
+    .verify-text .waktu { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="shield">🛡️</div>
+  <div>
+    <h1>Portal Verifikasi SKL</h1>
+    <p>MTs. Bustanul Ulum — Waru, Pamekasan</p>
+  </div>
+  <div class="header-badge">TTE</div>
+</header>
+
+<main id="app">
+  <!-- Diisi oleh JavaScript -->
+</main>
+
+<footer>
+  Sistem SKL &copy; 2026 &mdash; MTs. Bustanul Ulum, Waru, Pamekasan
+</footer>
+
+<script>
+// ── Helpers ──────────────────────────────────────────────────
+const app = document.getElementById('app');
+
+function showLoading() {
+  app.innerHTML = `
+    <div class="state-card">
+      <div class="spinner"></div>
+      <h2>Memverifikasi Dokumen...</h2>
+      <p>Sedang memeriksa keaslian Surat Keterangan Lulus<br>dalam basis data sekolah.</p>
+    </div>`;
+}
+
+function showError(msg) {
+  app.innerHTML = `
+    <div class="state-card">
+      <div class="icon">⚠️</div>
+      <h2 style="color:#b91c1c">Verifikasi Gagal</h2>
+      <p>${msg}</p>
+    </div>`;
+}
+
+function showNoParam() {
+  app.innerHTML = `
+    <div class="state-card">
+      <div class="icon">🔍</div>
+      <h2>Halaman Verifikasi SKL</h2>
+      <p>Halaman ini hanya dapat diakses melalui QR Code<br>yang tercetak pada Surat Keterangan Lulus resmi.</p>
+    </div>`;
+}
+
+
+function statusClass(s) {
+  if (s === 1) return 'lulus';
+  if (s === 2) return 'bersyarat';
+  return 'tidak';
+}
+
+function statusEmoji(s) {
+  if (s === 1) return '🎓';
+  if (s === 2) return '📝';
+  return '📋';
+}
+
+// ── Render hasil ─────────────────────────────────────────────
+function render(d) {
+  const { siswa, sekolah, waktu_verifikasi } = d;
+  const sc  = statusClass(siswa.status_lulus);
+  const em  = statusEmoji(siswa.status_lulus);
+
+  // Foto siswa
+  const fotoEl = siswa.ada_foto
+    ? `<div class="status-foto"><img src="uploads/foto/${siswa.nisn}.jpg" onerror="this.parentElement.innerHTML='📷'" alt="Foto"></div>`
+    : `<div class="status-foto" style="font-size:38px">📷</div>`;
+
+  // Status pill
+  const pillMap = { lulus: '✅ LULUS', bersyarat: '⚠️ LULUS BERSYARAT', tidak: '❌ TIDAK LULUS' };
+  const pillEl  = `<span class="pill ${sc}">${pillMap[sc]}</span>`;
+
+
+
+  app.innerHTML = `
+    <div class="result-wrap">
+
+      <!-- Status banner -->
+      <div class="status-banner ${sc}">
+        ${fotoEl}
+        <div class="status-info">
+          <div class="label">Surat Keterangan Lulus</div>
+          <div class="nama">${siswa.nama}</div>
+          <div class="nisn-tag">NISN: ${siswa.nisn}</div>
+        </div>
+        <div class="status-badge">${em} ${siswa.status_label}</div>
+      </div>
+
+      <!-- Verifikasi stamp -->
+      <div class="verify-stamp">
+        <div class="verify-icon">✓</div>
+        <div class="verify-text">
+          <h3>Dokumen Terverifikasi</h3>
+          <p>SKL ini telah diperiksa dan terdaftar dalam sistem resmi<br>
+             ${sekolah.nama}${sekolah.npsn ? ' (NPSN: '+sekolah.npsn+')' : ''}.</p>
+          <div class="waktu">🕐 Waktu verifikasi: ${waktu_verifikasi}</div>
+        </div>
+      </div>
+
+      <!-- Identitas siswa -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ico navy">👤</div>
+          <h3>Identitas Siswa</h3>
+        </div>
+        <div class="info-grid">
+          <div class="info-item full">
+            <div class="lbl">Nama Lengkap</div>
+            <div class="val big">${siswa.nama}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">NISN</div>
+            <div class="val">${siswa.nisn}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">Kelas</div>
+            <div class="val">${siswa.kelas}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">Tempat, Tanggal Lahir</div>
+            <div class="val">${siswa.ttl || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">No. Peserta Ujian</div>
+            <div class="val">${siswa.no_peserta || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">Nomor SKL</div>
+            <div class="val">${siswa.no_skl || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">Tahun Ajaran</div>
+            <div class="val">${siswa.tahun_ajaran}</div>
+          </div>
+          <div class="info-item">
+            <div class="lbl">Status Kelulusan</div>
+            <div class="val">${pillEl}</div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Info sekolah -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ico navy">🏫</div>
+          <h3>Data Sekolah</h3>
+        </div>
+        <div class="sekolah-footer">
+          <h4>${sekolah.nama}</h4>
+          ${sekolah.npsn ? `<p>NPSN: ${sekolah.npsn}</p>` : ''}
+          ${sekolah.kepala_sekolah ? `<p style="margin-top:8px;font-size:13px;color:#1e293b;font-weight:600">Kepala Madrasah: ${sekolah.kepala_sekolah}</p>` : ''}
+          ${sekolah.nip_kepsek && sekolah.nip_kepsek !== '-' ? `<p>NIP: ${sekolah.nip_kepsek}</p>` : ''}
+          <div style="margin-top:10px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+            ${sekolah.website ? `<a href="https://${sekolah.website}" target="_blank" style="font-size:12px;color:#1d4ed8">🌐 ${sekolah.website}</a>` : ''}
+            ${sekolah.email   ? `<a href="mailto:${sekolah.email}" style="font-size:12px;color:#1d4ed8">✉️ ${sekolah.email}</a>` : ''}
+          </div>
+        </div>
+      </div>
+
+    </div>`;
+}
+
+// ── Main ─────────────────────────────────────────────────────
+(async function() {
+  const params  = new URLSearchParams(location.search);
+  const no_skl  = params.get('no_skl') || '';
+  const nisn    = params.get('nisn')   || '';
+
+  if (!no_skl && !nisn) { showNoParam(); return; }
+
+  showLoading();
+
+  try {
+    const qs  = no_skl ? `no_skl=${encodeURIComponent(no_skl)}` : `nisn=${encodeURIComponent(nisn)}`;
+    const res = await fetch(`api/verifikasi.php?${qs}`);
+    const json = await res.json();
+
+    if (!json.success) {
+      showError(json.message || 'Data tidak ditemukan. Dokumen ini mungkin tidak valid.');
+      return;
+    }
+
+    render(json.data);
+  } catch (e) {
+    showError('Gagal menghubungi server. Periksa koneksi internet Anda dan coba lagi.');
+  }
+})();
+</script>
+</body>
+</html>
